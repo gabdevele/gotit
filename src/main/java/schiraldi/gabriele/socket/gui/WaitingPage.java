@@ -86,7 +86,7 @@ public class WaitingPage extends BackgroundPanel implements MessageListener {
         panel.add(startingLabel, gbc);
 
         startingTimer = new Timer(1000, e -> {
-            int time = Integer.parseInt(startingLabel.getText().split(" ")[4]);
+            int time = Integer.parseInt(startingLabel.getText().replaceAll("\\D+", ""));
             if (time == 1) {
                 startingTimer.stop();
             } else {
