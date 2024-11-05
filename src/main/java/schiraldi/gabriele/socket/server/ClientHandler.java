@@ -117,8 +117,10 @@ public class ClientHandler extends Thread {
         }
         try {
             game.addWord(player.getId(), word);
-        } catch (GameLogic.WordAlreadyUsedException | GameLogic.GameErrorException e) {
+        } catch (GameLogic.GameErrorException e) {
             sendMessage(Utils.keyString(Strings.get("error"), e.getMessage()));
+        } catch (GameLogic.WordAlreadyUsedException ex){
+            sendMessage(Utils.keyString(Strings.get("lose"), "word"));
         }
 
         if(game.sameRound()){

@@ -2,12 +2,24 @@ package schiraldi.gabriele.socket.gui;
 
 import schiraldi.gabriele.socket.Strings;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import javax.swing.Timer;
+import javax.swing.JButton;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Insets;
 import java.util.Arrays;
+
 
 public class WaitingPage extends BackgroundPanel implements MessageListener {
     private final JLabel codeLabel, waitingLabel, waitingDots, joinedPlayerLabel, startingLabel;
@@ -17,7 +29,7 @@ public class WaitingPage extends BackgroundPanel implements MessageListener {
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
 
-    public WaitingPage(JFrame frame, CardLayout cardLayout, JPanel mainPanel, Client client) {
+    public WaitingPage(CardLayout cardLayout, JPanel mainPanel, Client client) {
         this.cardLayout = cardLayout;
         this.mainPanel = mainPanel;
 
@@ -49,7 +61,9 @@ public class WaitingPage extends BackgroundPanel implements MessageListener {
         waitingDots.setForeground(Color.WHITE);
         waitingDots.setFont(new Font("Arial", Font.PLAIN, 12));
         panel.add(waitingDots, gbc);
+
         String[] dots = {Strings.get("waiting.dots.0"), Strings.get("waiting.dots.1"), Strings.get("waiting.dots.2")};
+
         dotsTimer = new Timer(500, e -> {
             String text = waitingDots.getText();
             int next = (Arrays.asList(dots).indexOf(text) + 1) % dots.length;
@@ -65,7 +79,7 @@ public class WaitingPage extends BackgroundPanel implements MessageListener {
         joinedPlayerLabel.setVisible(false);
         panel.add(joinedPlayerLabel, gbc);
 
-        startingLabel = new JLabel(Strings.get("game.starting.in"));
+        startingLabel = new JLabel(Strings.get("game.starting.in", 5));
         startingLabel.setForeground(Color.WHITE);
         startingLabel.setFont(new Font("Arial", Font.BOLD, 18));
         startingLabel.setVisible(false);
@@ -76,7 +90,7 @@ public class WaitingPage extends BackgroundPanel implements MessageListener {
             if (time == 1) {
                 startingTimer.stop();
             } else {
-                startingLabel.setText(Strings.get("game.starting.in.prefix") + " " + (time - 1) + " " + Strings.get("game.starting.in.suffix"));
+                startingLabel.setText(Strings.get("game.starting.in", time-1));
             }
         });
 
@@ -115,7 +129,7 @@ public class WaitingPage extends BackgroundPanel implements MessageListener {
                 waitingDots.setVisible(false);
                 dotsTimer.stop();
                 startBtn.setEnabled(true);
-                joinedPlayerLabel.setText(Strings.get("other.player") + msg[1]);
+                joinedPlayerLabel.setText(Strings.get("other.player", msg[1]));
                 joinedPlayerLabel.setVisible(true);
                 break;
             case "playerLeft":
@@ -127,7 +141,7 @@ public class WaitingPage extends BackgroundPanel implements MessageListener {
                 break;
             case "joined":
                 codeLabel.setVisible(false);
-                joinedPlayerLabel.setText(Strings.get("other.player") + msg[1]);
+                joinedPlayerLabel.setText(Strings.get("other.player", msg[1]));
                 joinedPlayerLabel.setVisible(true);
                 waitingLabel.setText(Strings.get("waiting.creator"));
                 startBtn.setVisible(false);

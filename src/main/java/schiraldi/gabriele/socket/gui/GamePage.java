@@ -2,9 +2,9 @@ package schiraldi.gabriele.socket.gui;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import schiraldi.gabriele.socket.Strings;
+import schiraldi.gabriele.socket.Utils;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -24,7 +24,7 @@ public class GamePage extends BackgroundPanel implements MessageListener {
     private final JTextField wordField;
     private final JTextArea logArea;
 
-    public GamePage(JFrame frame, CardLayout cardLayout, JPanel mainPanel, Client client) {
+    public GamePage(CardLayout cardLayout, JPanel mainPanel, Client client) {
         JPanel parentPanel = new JPanel(new BorderLayout());
         parentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         parentPanel.setOpaque(false);
@@ -48,7 +48,7 @@ public class GamePage extends BackgroundPanel implements MessageListener {
                 "border: 16,16,16,16,#902CDD,,60"
         );
         wordField.addActionListener(e -> {
-            client.sendMessage("word:" + wordField.getText());
+            client.sendMessage(Utils.keyString("word", wordField.getText()));
             wordField.setEnabled(false);
         });
         wordField.setToolTipText(Strings.get("game.word.tooltip"));
@@ -101,6 +101,8 @@ public class GamePage extends BackgroundPanel implements MessageListener {
         String[] msg = message.split(":");
         switch (msg[0]) {
             case "started":
+                wordField.setText("");
+                logArea.removeAll();
                 logArea.append(Strings.get("game.started", msg[1]) + "\n");
                 break;
             case "failed":
@@ -109,7 +111,11 @@ public class GamePage extends BackgroundPanel implements MessageListener {
                 wordField.setEnabled(true);
                 textLabel.setText(Strings.get("game.round.label", msg[2]));
                 break;
+            case "lost":
+                //TODO: lost
+                break;
             case "win":
+                //TODO: win
                 logArea.append(Strings.get("game.win", msg[1]) + "\n");
                 break;
         }

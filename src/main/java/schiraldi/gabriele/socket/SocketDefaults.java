@@ -6,5 +6,4 @@ public abstract class SocketDefaults{
     protected final int SERVER_PORT=8000;
 
     public abstract void start();
-
 }

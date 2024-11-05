@@ -50,8 +50,8 @@ public class Client extends SocketDefaults {
 
         WelcomePage welcomePage = new WelcomePage(frame, cardLayout, mainPanel, this);
         HomePage homePage = new HomePage(frame, cardLayout, mainPanel, this);
-        WaitingPage waitingPage = new WaitingPage(frame, cardLayout, mainPanel, this);
-        GamePage gamePage = new GamePage(frame, cardLayout, mainPanel, this);
+        WaitingPage waitingPage = new WaitingPage(cardLayout, mainPanel, this);
+        GamePage gamePage = new GamePage(cardLayout, mainPanel, this);
 
         mainPanel.add(welcomePage, "WelcomePage");
         mainPanel.add(homePage, "HomePage");

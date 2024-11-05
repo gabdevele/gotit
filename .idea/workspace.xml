@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8245ed3-2431-4555-a30f-99a441ef9075" name="Changes" comment="first commit with a lots of bugs" />
+    <list default="true" id="c8245ed3-2431-4555-a30f-99a441ef9075" name="Changes" comment="first commit with a lots of bugs">
+      <change afterPath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/gui/FinishPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/SocketDefaults.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/SocketDefaults.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/gui/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/gui/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/gui/GamePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/gui/GamePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/gui/WaitingPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/gui/WaitingPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/server/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schiraldi/gabriele/socket/server/GameLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/strings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/strings.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,7 +68,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/kali/Modugno/socket-vaia",
+    "last_opened_file_path": "/home/kali/Modugno/gotit",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",

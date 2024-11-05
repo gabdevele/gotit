@@ -99,7 +99,7 @@ public class GameLogic {
             }
             List<String> words = wordsMap.get(playerId);
             if (words.contains(word)) {
-                throw new WordAlreadyUsedException(Strings.get("word.already.used"));
+                throw new WordAlreadyUsedException();
             }
             words.add(word);
         }
@@ -159,8 +159,8 @@ public class GameLogic {
     }
 
     public static class WordAlreadyUsedException extends Exception {
-        public WordAlreadyUsedException(String message) {
-            super(message);
+        public WordAlreadyUsedException() {
+            super(Strings.get("word.already.used"));
         }
     }
 
