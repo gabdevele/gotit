@@ -1,10 +1,9 @@
 package schiraldi.gabriele.socket.gui;
 
-import schiraldi.gabriele.socket.Strings;
+import schiraldi.gabriele.socket.Utils;
 
 import javax.swing.*;
 import java.awt.*;
-import schiraldi.gabriele.socket.Utils;
 
 public class WelcomePage extends BackgroundPanel {
     private final JTextField nameField;
@@ -18,7 +17,7 @@ public class WelcomePage extends BackgroundPanel {
         gbc.insets = new Insets(10, 0, 10, 0);
         gbc.anchor = GridBagConstraints.CENTER;
 
-        JLabel nameLabel = new JLabel(Strings.get("welcome.enter.name"));
+        JLabel nameLabel = new JLabel(Utils.getString("welcome.enter.name"));
         nameLabel.setForeground(Color.WHITE);
         centerPanel.add(nameLabel, gbc);
 
@@ -26,13 +25,13 @@ public class WelcomePage extends BackgroundPanel {
         nameField.setMaximumSize(new Dimension(200, 30));
         centerPanel.add(nameField, gbc);
 
-        JButton playButton = new JButton(Strings.get("welcome.play"));
+        JButton playButton = new JButton(Utils.getString("welcome.play"));
         playButton.putClientProperty("JButton.buttonType", "roundRect");
         playButton.setPreferredSize(new Dimension(80, 30));
         playButton.addActionListener(e -> {
             String name = nameField.getText();
             if (Utils.wordInvalid(name)) {
-                JOptionPane.showMessageDialog(frame, Strings.get("welcome.invalid.name"), Strings.get("welcome.error"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frame, Utils.getString("welcome.invalid.name"), Utils.getString("welcome.error"), JOptionPane.ERROR_MESSAGE);
             } else {
                 client.sendMessage(Utils.keyString("name", name));
                 cardLayout.show(mainPanel, "HomePage");

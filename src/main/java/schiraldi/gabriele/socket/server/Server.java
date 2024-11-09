@@ -1,7 +1,7 @@
 package schiraldi.gabriele.socket.server;
 
 import schiraldi.gabriele.socket.SocketDefaults;
-import schiraldi.gabriele.socket.Strings;
+import schiraldi.gabriele.socket.Utils;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -21,15 +21,15 @@ public class Server extends SocketDefaults {
         GameLogic gameLogic = new GameLogic();
 
         try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)) {
-            logger.info(Strings.get("server.listening") + serverSocket.getLocalPort());
+            logger.info(Utils.getString("server.listening", SERVER_IP, String.valueOf(SERVER_PORT)));
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                logger.info(Strings.get("client.connected", clientSocket.getRemoteSocketAddress().toString()));
+                logger.info(Utils.getString("client.connected", clientSocket.getRemoteSocketAddress().toString()));
                 new ClientHandler(clientSocket, gameLogic).start();
             }
         } catch (IOException e) {
-            logger.severe(Strings.get("server.error"));
+            logger.severe(Utils.getString("server.error"));
         }
     }
 }

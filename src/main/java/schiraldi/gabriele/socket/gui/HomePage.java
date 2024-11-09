@@ -1,6 +1,5 @@
 package schiraldi.gabriele.socket.gui;
 
-import schiraldi.gabriele.socket.Strings;
 import schiraldi.gabriele.socket.Utils;
 
 import javax.swing.JButton;
@@ -29,7 +28,7 @@ public class HomePage extends BackgroundPanel implements MessageListener {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.CENTER;
 
-        JButton createGameButton = new JButton(Strings.get("home.create.game"));
+        JButton createGameButton = new JButton(Utils.getString("home.create.game"));
         createGameButton.putClientProperty("JButton.buttonType", "roundRect");
         createGameButton.setPreferredSize(new Dimension(150, 30));
 
@@ -48,16 +47,16 @@ public class HomePage extends BackgroundPanel implements MessageListener {
     }
 
     private static JButton getJoinGameButton(JFrame frame, Client client) {
-        JButton joinGameButton = new JButton(Strings.get("home.join.game"));
+        JButton joinGameButton = new JButton(Utils.getString("home.join.game"));
         joinGameButton.putClientProperty("JButton.buttonType", "roundRect");
         joinGameButton.setPreferredSize(new Dimension(200, 30));
 
         joinGameButton.addActionListener(e -> {
-                    String code = JOptionPane.showInputDialog(frame, Strings.get("home.enter.game.code"));
+                    String code = JOptionPane.showInputDialog(frame, Utils.getString("home.enter.game.code"));
                     if (code != null && code.matches("\\d{4}") && !Utils.wordInvalid(code)) {
                         client.sendMessage("join:" + code);
                     } else {
-                        JOptionPane.showMessageDialog(frame, Strings.get("home.invalid.code"), Strings.get("home.error"), JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(frame, Utils.getString("home.invalid.code"), Utils.getString("home.error"), JOptionPane.ERROR_MESSAGE);
                     }
                 }
         );
@@ -66,7 +65,7 @@ public class HomePage extends BackgroundPanel implements MessageListener {
 
     @Override
     public void onMessage(String message) {
-        if(message.split(":")[0].equals(Strings.get("joined"))){
+        if(message.split(":")[0].equals(Utils.getString("joined"))){
             cardLayout.show(mainPanel, "WaitingPage");
         }
     }

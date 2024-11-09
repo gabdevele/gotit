@@ -1,6 +1,6 @@
 package schiraldi.gabriele.socket.gui;
 
-import schiraldi.gabriele.socket.Strings;
+import schiraldi.gabriele.socket.Utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,10 +20,10 @@ public class BackgroundPanel extends JPanel {
         try {
             backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/background.png")));
             if (backgroundImage == null) {
-                logger.severe(Strings.get("background.not.found"));
+                logger.severe(Utils.getString("background.not.found"));
             }
         } catch (IOException e) {
-            logger.severe(Strings.get("background.loading.error"));
+            logger.severe(Utils.getString("background.loading.error"));
         }
 
         setLayout(new BorderLayout());

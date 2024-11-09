@@ -1,7 +1,7 @@
 package schiraldi.gabriele.socket.gui;
 
 import schiraldi.gabriele.socket.SocketDefaults;
-import schiraldi.gabriele.socket.Strings;
+import schiraldi.gabriele.socket.Utils;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.JFrame;
@@ -88,10 +88,10 @@ public class Client extends SocketDefaults {
             oos = new ObjectOutputStream(clientSocket.getOutputStream());
             ois = new ObjectInputStream(clientSocket.getInputStream());
 
-            logger.info(Strings.get("client.connection.success"));
+            logger.info(Utils.getString("client.connection.success"));
             new Thread(new ServerListener()).start();
         } catch (IOException e) {
-            logger.severe(Strings.get("client.io.error", e.getMessage()));
+            logger.severe(Utils.getString("client.io.error", e.getMessage()));
             System.exit(1);
         }
     }
@@ -100,7 +100,7 @@ public class Client extends SocketDefaults {
         try {
             oos.writeObject(message);
         } catch (IOException e) {
-            logger.severe(Strings.get("client.send.error", e.getMessage()));
+            logger.severe(Utils.getString("client.send.error", e.getMessage()));
         }
     }
 
@@ -110,7 +110,7 @@ public class Client extends SocketDefaults {
             if (oos != null) oos.close();
             if (clientSocket != null) clientSocket.close();
         } catch (IOException e) {
-            logger.warning(Strings.get("client.close.error", e.getMessage()));
+            logger.warning(Utils.getString("client.close.error", e.getMessage()));
         }
     }
 
@@ -122,13 +122,13 @@ public class Client extends SocketDefaults {
                     String serverMsg = (String) ois.readObject();
                     logger.info(serverMsg);
                     if (serverMsg.split(":")[0].equals("error")) {
-                        JOptionPane.showMessageDialog(frame, serverMsg.split(":")[1], Strings.get("client.error"), JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(frame, serverMsg.split(":")[1], Utils.getString("client.error"), JOptionPane.ERROR_MESSAGE);
                     } else {
                         notifyMessageListeners(serverMsg);
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {
-                logger.severe(Strings.get("client.connection.lost", e.getMessage()));
+                logger.severe(Utils.getString("client.connection.lost", e.getMessage()));
             }
         }
     }

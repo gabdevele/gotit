@@ -1,6 +1,6 @@
 package schiraldi.gabriele.socket.server;
 
-import schiraldi.gabriele.socket.Strings;
+import schiraldi.gabriele.socket.Utils;
 
 import java.util.Random;
 import java.util.List;
@@ -31,9 +31,9 @@ public class GameLogic {
 
     public synchronized Game joinGame(int gameId, Player player) throws GameErrorException {
         Game game = games.get(gameId);
-        if (game == null) throw new GameErrorException(Strings.get("game.not.found"));
-        if (game.getPlayers().size() >= 2) throw new GameErrorException(Strings.get("game.full"));
-        if (game.getState() != Game.GameState.WAITING) throw new GameErrorException(Strings.get("game.already.started"));
+        if (game == null) throw new GameErrorException(Utils.getString("game.not.found"));
+        if (game.getPlayers().size() >= 2) throw new GameErrorException(Utils.getString("game.full"));
+        if (game.getState() != Game.GameState.WAITING) throw new GameErrorException(Utils.getString("game.already.started"));
         game.addPlayer(player);
         return game;
     }
@@ -95,7 +95,7 @@ public class GameLogic {
 
         public void addWord(String playerId, String word) throws WordAlreadyUsedException, GameErrorException {
             if (state != GameState.STARTED) {
-                throw new GameErrorException(Strings.get("game.not.started"));
+                throw new GameErrorException(Utils.getString("game.not.started"));
             }
             List<String> words = wordsMap.get(playerId);
             if (words.contains(word)) {
@@ -160,7 +160,7 @@ public class GameLogic {
 
     public static class WordAlreadyUsedException extends Exception {
         public WordAlreadyUsedException() {
-            super(Strings.get("word.already.used"));
+            super(Utils.getString("word.already.used"));
         }
     }
 

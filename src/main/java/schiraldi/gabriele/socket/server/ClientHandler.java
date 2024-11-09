@@ -1,6 +1,5 @@
 package schiraldi.gabriele.socket.server;
 
-import schiraldi.gabriele.socket.Strings;
 import schiraldi.gabriele.socket.Utils;
 
 import java.io.EOFException;
@@ -39,16 +38,16 @@ public class ClientHandler extends Thread {
                     String[] msg = ((String) ois.readObject()).split(":");
                     handleClientMessage(msg);
                 } catch (SocketException | EOFException e) {
-                    logger.log(Level.INFO, Strings.get("connection.closed"));
+                    logger.log(Level.INFO, Utils.getString("connection.closed"));
                     break;
                 } catch (ClassNotFoundException | IOException e) {
-                    logger.log(Level.SEVERE, Strings.get("error.handling.message"), e);
+                    logger.log(Level.SEVERE, Utils.getString("error.handling.message"), e);
                     break;
                 }
             }
 
         } catch (IOException e) {
-            logger.log(Level.SEVERE, Strings.get("error.initializing.streams"), e);
+            logger.log(Level.SEVERE, Utils.getString("error.initializing.streams"), e);
         } finally {
             closeConnection();
         }
@@ -78,7 +77,7 @@ public class ClientHandler extends Thread {
                 handleExit();
                 break;
             default:
-                sendMessage(Strings.get("invalid.command"));
+                sendMessage(Utils.getString("invalid.command"));
                 break;
         }
     }
@@ -89,46 +88,46 @@ public class ClientHandler extends Thread {
 
     private void handleCreate() {
         game = gameLogic.createGame(player);
-        sendMessage(Utils.keyString(Strings.get("code"), String.valueOf(game.getId())));
+        sendMessage(Utils.keyString(Utils.getString("code"), String.valueOf(game.getId())));
     }
 
     private void handleList() {
-        sendMessage(Utils.keyString(Strings.get("list"), gameLogic.listGames()));
+        sendMessage(Utils.keyString(Utils.getString("list"), gameLogic.listGames()));
     }
 
     private void handleJoin(String gameId) {
         try {
             game = gameLogic.joinGame(Integer.parseInt(gameId), player);
         } catch (GameLogic.GameErrorException e) {
-            sendMessage(Utils.keyString(Strings.get("error"), e.getMessage()));
+            sendMessage(Utils.keyString(Utils.getString("error"), e.getMessage()));
             return;
         }
         Player enemy = game.getEnemy(player);
         if (enemy != null) {
-            enemy.sendMessage(Utils.keyString(Strings.get("newPlayer"), player.getName()));
-            sendMessage(Utils.keyString(Strings.get("joined"), enemy.getName()));
+            enemy.sendMessage(Utils.keyString(Utils.getString("newPlayer"), player.getName()));
+            sendMessage(Utils.keyString(Utils.getString("joined"), enemy.getName()));
         }
     }
 
     private void handleWord(String word) {
         if (Utils.wordInvalid(word)) {
-            sendMessage(Strings.get("invalid.word"));
+            sendMessage(Utils.getString("invalid.word"));
             return;
         }
         try {
             game.addWord(player.getId(), word);
         } catch (GameLogic.GameErrorException e) {
-            sendMessage(Utils.keyString(Strings.get("error"), e.getMessage()));
+            sendMessage(Utils.keyString(Utils.getString("error"), e.getMessage()));
         } catch (GameLogic.WordAlreadyUsedException ex){
-            sendMessage(Utils.keyString(Strings.get("lose"), "word"));
+            sendMessage(Utils.keyString(Utils.getString("lose"), "word"));
         }
 
         if(game.sameRound()){
             if(game.checkForWin()){
-                game.getPlayers().forEach(p -> p.sendMessage(Utils.keyString(Strings.get("win"), game.getLastWord(player))));
+                game.getPlayers().forEach(p -> p.sendMessage(Utils.keyString(Utils.getString("win"), game.getLastWord(player))));
                 gameLogic.removeGame(game.getId());
             } else {
-                game.getPlayers().forEach(p -> p.sendMessage(Strings.get("failed") + ":" + game.getLastWord(game.getEnemy(player)) + ":" + game.getRound()));
+                game.getPlayers().forEach(p -> p.sendMessage(Utils.getString("failed") + ":" + game.getLastWord(game.getEnemy(player)) + ":" + game.getRound()));
             }
         }
     }
@@ -138,7 +137,7 @@ public class ClientHandler extends Thread {
         if(game.getPlayers().isEmpty()){
             gameLogic.removeGame(game.getId());
         } else {
-            game.getEnemy(player).sendMessage(Strings.get("playerLeft"));
+            game.getEnemy(player).sendMessage(Utils.getString("playerLeft"));
         }
     }
 
@@ -146,15 +145,15 @@ public class ClientHandler extends Thread {
         try {
             oos.writeObject(message);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, Strings.get("error.sending.message"), e);
+            logger.log(Level.SEVERE, Utils.getString("error.sending.message"), e);
         }
     }
 
     public void startGame() {
-        sendMessage(Strings.get("starting"));
+        sendMessage(Utils.getString("starting"));
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.schedule(() -> {
-            sendMessage(Utils.keyString(Strings.get("started"), game.getEnemy(player).getName()));
+            sendMessage(Utils.keyString(Utils.getString("started"), game.getEnemy(player).getName()));
             game.setState(GameLogic.Game.GameState.STARTED);
             scheduler.shutdown();
         }, 6, TimeUnit.SECONDS);
@@ -166,7 +165,7 @@ public class ClientHandler extends Thread {
                 clientSocket.close();
             }
         } catch (IOException e) {
-            logger.log(Level.SEVERE, Strings.get("error.closing.connection"), e);
+            logger.log(Level.SEVERE, Utils.getString("error.closing.connection"), e);
         } finally {
             Thread.currentThread().interrupt();
         }
